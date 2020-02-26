@@ -4,26 +4,36 @@ function createUser(user) {
   return db('users').insert(user);
 }
 
-function findUserById(id) {
-  return db('users').where({id: id});
+function login(user) {
+  return db('users').where('username', user.username);
 }
 
-function findUserByUsername(username) {
-  return db('users').where({username: username});
+function getUserById(id) {
+  return db('users').where({id: id}).select('id', 'username', 'type');
+}
+
+function getUserByUsername(username) {
+  return db('users').where({username: username}).select('id', 'username', 'type');
 }
 
 function getUsers() {
-  return db('users');
+  return db('users').select('id', 'username', 'type');
 }
 
 function deleteUser(id) {
   return db('users').where({id: id}).del();
 }
 
+function getUserItems(id) {
+  return db('items').where({user_id: id});
+}
+
 module.exports = {
   createUser,
-  findUserById,
-  findUserByUsername,
+  login,
+  getUserById,
+  getUserByUsername,
   getUsers,
-  deleteUser
+  deleteUser,
+  getUserItems
 }

@@ -15,14 +15,32 @@ router.post('/register', validation, (req, res) => {
     db.findUserByUsername(credentials.username).first().then(user => {
       const token = generateToken(user);
       res.status(201).json({
-        message: `Welcome, ${user.username}! Have a token...`,
+        message: `User successfully created. Welcome, ${user.username}! Here is your token...`,
         token
       });
     }).catch(err => {
-      res.status(404).json({message: "A user with that username could not be found"});
+      res.status(404).json({message: "Error during user creation"});
     })
   }).catch(err => {
     res.status(500).json({message: "Could not register user"});
+  })
+});
+
+router.post('/login', validation, (req, res) => {
+  const credentials = req.body;
+
+  db.login(req.body).first().then(user => {
+    if (!user || !bcrypt.compareSync(credentials.password, user.password)) {
+      res.status(401).json({error: 'Invalid credentials'});
+    } else {
+      const token = generateToken(user);
+      res.status(200).json({
+        message: `Welcome ${user.username}!, have a token...`,
+        token
+      });
+    }
+  }).catch(err => {
+    res.status(500).json({message: "Could not log in"});
   })
 });
 
@@ -32,7 +50,34 @@ router.get('/', (req, res) => {
   }).catch(err => {
     res.status(500).json({message: "Could not get users"});
   })
-})
+});
+
+router.get('/:id', (req, res) => {
+  const { id } = req.params
+  db.getUserById(id).then(user => {
+    res.status(200).json({message: "Here is the user", user});
+  }).catch(err => {
+    res.status(500).json({message: "Could not get user"});
+  })
+});
+
+router.get('/:id/items', (req, res) => {
+  const { id } = req.params
+  db.getUserItems(id).then(items => {
+    res.status(200).json({message: "Here are the user's items", items});
+  }).catch(err => {
+    res.status(500).json({message: "Could not get user's items"});
+  })
+});
+
+router.delete('/:id', (req, res) => {
+  const { id } = req.params
+  db.deleteUser(id).then(response => {
+    res.status(200).json({message: "User successfully deleted", response});
+  }).catch(err => {
+    res.status(500).json({message: "Could not delete user"});
+  })
+});
 
 function generateToken(user) {
   const payload = {
