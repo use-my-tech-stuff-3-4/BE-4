@@ -94,8 +94,8 @@ function generateToken(user) {
 
 // Custom Middleware
 function validation (req, res, next) {
-  if (!req.body.username || !req.body.password || !req.body.userType) {
-    res.send({error: "Must provide username, password, and userType"})
+  if (!req.body.username || !req.body.password || !req.body.type) {
+    res.send({error: "Must provide username, password, and type"})
   } else {
     next();
   }
