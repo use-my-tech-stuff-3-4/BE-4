@@ -10,5 +10,8 @@ server.use(express.json());
 server.use(helmet());
 server.use('/api/users', userRoutes);
 server.use('/api/items', itemRoutes);
+server.get('/', (req, res) => {
+  res.send('Welcome to the Rentech API. Please visit the <a href="https://documenter.getpostman.com/view/2146948/SzKYNGXK?version=latest" target="_blank">docs</a> for endpoint usage information.')
+})
 
 module.exports = server;
