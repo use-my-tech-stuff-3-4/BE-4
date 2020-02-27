@@ -5,7 +5,7 @@ function createUser(user) {
 }
 
 function login(user) {
-  return db('users').where('username', user.username);
+  return db('users').where({username: user.username});
 }
 
 function getUserById(id) {
