@@ -44,7 +44,20 @@ router.post('/login', validation, (req, res) => {
 
 router.get('/', (req, res) => {
   db.getUsers().then(users => {
-    res.status(200).json({message: "Here are the users", users});
+    const userIdArray = users.map(user => {
+      user.items = [];
+      return user.id;
+    });
+    db.getItems(userIdArray).then(items => {
+      users.forEach(user => {
+        items.forEach(item => {
+          if (item.user_id === user.id) {
+            user.items.push(item);
+          }
+        })
+      })
+      res.status(200).json({message: "Here are the users", users});
+    });
   }).catch(err => {
     res.status(500).json({message: "Could not get users"});
   })

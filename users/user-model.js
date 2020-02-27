@@ -32,6 +32,10 @@ function getUserItems(id) {
   return db('items').where({user_id: id});
 }
 
+function getItems(userIds) {
+  return db('items').whereIn('user_id', userIds);
+}
+
 module.exports = {
   createUser,
   login,
@@ -40,5 +44,6 @@ module.exports = {
   getUsers,
   updateUser,
   deleteUser,
-  getUserItems
+  getUserItems,
+  getItems
 }
