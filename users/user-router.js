@@ -7,12 +7,12 @@ const db = require('./user-model.js');
 const secrets = require('../data/secrets.js');
 
 router.post('/register', validation, (req, res) => {
-  const credentials = req.body;
-  const hash = bcrypt.hashSync(credentials.password, 8);
-  credentials.password = hash;
+  const newUser = req.body;
+  const hash = bcrypt.hashSync(newUser.password, 8);
+  newUser.password = hash;
 
-  db.createUser(credentials).then(response => {
-    db.findUserByUsername(credentials.username).first().then(user => {
+  db.createUser(newUser).then(response => {
+    db.getUserByUsername(newUser.username).first().then(user => {
       const token = generateToken(user);
       res.status(201).json({
         message: `User successfully created. Welcome, ${user.username}! Here is your token...`,
@@ -27,8 +27,6 @@ router.post('/register', validation, (req, res) => {
 });
 
 router.post('/login', validation, (req, res) => {
-  const credentials = req.body;
-
   db.login(req.body).first().then(user => {
     if (!user || !bcrypt.compareSync(credentials.password, user.password)) {
       res.status(401).json({error: 'Invalid credentials'});
