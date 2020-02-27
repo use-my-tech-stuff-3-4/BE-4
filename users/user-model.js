@@ -24,6 +24,10 @@ function deleteUser(id) {
   return db('users').where({id: id}).del();
 }
 
+function updateUser(id, user) {
+  return db('users').where({ id: id }).update(user);
+}
+
 function getUserItems(id) {
   return db('items').where({user_id: id});
 }
@@ -34,6 +38,7 @@ module.exports = {
   getUserById,
   getUserByUsername,
   getUsers,
+  updateUser,
   deleteUser,
   getUserItems
 }

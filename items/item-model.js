@@ -16,6 +16,10 @@ function getItems() {
   return db('items');
 }
 
+function updateItem(id, item) {
+  return db('items').where({ id: id }).update(item);
+}
+
 function deleteItem(id) {
   return db('items').where({id: id}).del();
 }
@@ -25,5 +29,6 @@ module.exports = {
   findItemById,
   findItemsByName,
   getItems,
+  updateItem,
   deleteItem
 }

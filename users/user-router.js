@@ -19,7 +19,7 @@ router.post('/register', validation, (req, res) => {
         token
       });
     }).catch(err => {
-      res.status(404).json({message: "Error during user creation"});
+      res.status(400).json({message: "Error during user creation"});
     })
   }).catch(err => {
     res.status(500).json({message: "Could not register user"});
@@ -33,7 +33,7 @@ router.post('/login', validation, (req, res) => {
     } else {
       const token = generateToken(user);
       res.status(200).json({
-        message: `Welcome ${user.username}!, have a token...`,
+        message: `Welcome, ${user.username}! Have a token...`,
         token
       });
     }
@@ -65,6 +65,19 @@ router.get('/:id/items', (req, res) => {
     res.status(200).json({message: "Here are the user's items", items});
   }).catch(err => {
     res.status(500).json({message: "Could not get user's items"});
+  })
+});
+
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  db.updateUser(id, req.body).then(response => {
+    db.getUserById(id).then(user => {
+      res.status(200).json({message: "User successfully updated", user});
+    }).catch(err => {
+      res.status(404).json({message: "A user with that id does not exist"})
+    })
+  }).catch(err => {
+    res.status(500).json({message: "Could not update user"});
   })
 });
 
