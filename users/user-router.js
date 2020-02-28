@@ -28,7 +28,7 @@ router.post('/register', validation, (req, res) => {
 
 router.post('/login', validation, (req, res) => {
   db.login(req.body).first().then(user => {
-    if (!user || !bcrypt.compareSync(credentials.password, user.password)) {
+    if (!user || !bcrypt.compareSync(req.body.password, user.password)) {
       res.status(401).json({error: 'Invalid credentials'});
     } else {
       const token = generateToken(user);
