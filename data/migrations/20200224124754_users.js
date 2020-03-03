@@ -10,16 +10,20 @@ exports.up = function(knex) {
       .notNullable();
     tbl.text('type', 128)
       .notNullable();
+    tbl.text('location', 128);
+    tbl.text('email', 128);
   })
   .createTable('items', tbl => {
     tbl.increments();
-    tbl.text('name')
+    tbl.text('name', 128)
       .notNullable();
-    tbl.text('description')
+    tbl.text('description', 128)
       .notNullable();
     tbl.integer('price')
       .notNullable();
-    tbl.string('price_type')
+    tbl.text('price_type', 128)
+      .notNullable();
+    tbl.text('img_url', 128)
       .notNullable();
     tbl.integer('user_id')
       .unsigned()
