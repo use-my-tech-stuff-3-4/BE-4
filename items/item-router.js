@@ -31,7 +31,7 @@ router.get('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
   const { id } = req.params;
   db.updateItem(id, req.body).then(response => {
-    db.getItemById(id).then(item => {
+    db.findItemById(id).then(item => {
       res.status(200).json({message: "Item successfully updated", item});
     }).catch(err => {
       res.status(404).json({message: "An item with that id does not exist"})
