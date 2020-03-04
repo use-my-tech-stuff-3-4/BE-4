@@ -14,7 +14,7 @@ exports.up = function(knex) {
     tbl.text('email', 128);
   })
   .createTable('items', tbl => {
-    tbl.increments();
+    tbl.increments().unsigned();
     tbl.text('name', 128)
       .notNullable();
     tbl.text('description', 128)

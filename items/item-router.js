@@ -7,7 +7,7 @@ router.post('/', (req, res) => {
   db.createItem(req.body).then(response => {
     res.status(201).json({message: "Item successfully created"});
   }).catch(err => {
-    res.status(500).json({error: "Could not create item"});
+    res.status(500).json({message: "Could not create item", error: err});
   })
 });
 
