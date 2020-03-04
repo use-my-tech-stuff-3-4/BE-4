@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  db.getItemById(id).then(item => {
+  db.findItemById(id).then(item => {
     res.status(200).json({message: "Here is the item", item});
   }).catch(err => {
     res.status(500).json({error: "Could not get item"});

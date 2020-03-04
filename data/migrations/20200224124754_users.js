@@ -23,8 +23,7 @@ exports.up = function(knex) {
       .notNullable();
     tbl.text('price_type', 128)
       .notNullable();
-    tbl.text('img_url', 128)
-      .notNullable();
+    tbl.text('img_url', 128);
     tbl.integer('user_id')
       .unsigned()
       .notNullable()
