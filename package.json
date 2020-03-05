@@ -8,7 +8,11 @@
     "start": "node index.js",
     "migrate": "knex migrate:latest",
     "unmigrate": "knex migrate:rollback",
-    "seed": "knex seed:run"
+    "seed": "knex seed:run",
+    "test": "cross-env NODE_ENV=testing jest --watch"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",
@@ -28,5 +32,12 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.10",
     "pg": "^7.18.2"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.1",
+    "jest": "^25.1.0",
+    "jest-cli": "^25.1.0",
+    "sqlite3": "^4.1.1",
+    "supertest": "^4.0.2"
   }
 }
