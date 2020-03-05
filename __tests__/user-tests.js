@@ -2,11 +2,6 @@ const db = require('../data/dbConfig.js');
 const request = require('supertest');
 const server = require('../server.js');
 
-beforeEach(async () => {
-  // this function executes and clears out the table before each test
-  await db('users').truncate();
-});
-
 describe('server.js', () => {
   describe('POST /register', () => {
     it('should return 201', async () => {
