@@ -94,7 +94,7 @@ router.put('/:id', (req, res) => {
   })
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', restricted, (req, res) => {
   const { id } = req.params
   db.deleteUser(id).then(response => {
     res.status(200).json({message: "User successfully deleted", response});
